@@ -55,7 +55,7 @@ All trades incur proportional costs, and the cash account accrues interest at
 the risk-free rate.
 
 ### 4. Evaluation
-For each simulation, the P&L of the option writer is computed:
+For each simulation, the P\&L of the option writer is computed:
 
 $$
 \text{P\&L}_T =
