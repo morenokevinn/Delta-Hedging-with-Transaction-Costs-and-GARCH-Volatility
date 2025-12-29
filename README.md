@@ -1,94 +1,38 @@
 # Delta Hedging with Transaction Costs and GARCH Volatility
 
-This repository contains a Jupyter notebook that studies the performance of a
-delta-hedging strategy for European call options when proportional transaction
-costs are present. The analysis is carried out in the framework of the
-Clewlow–Hodges **inaction region**, where the hedger rebalances only when the
-current delta moves outside a tolerance band.
+This project studies how a delta-hedging strategy for European call options behaves when transaction costs are present.  
+The goal is not to price options, but to understand how trading frictions affect the strategy.
 
-The objective is not to price options, but to understand how transaction costs
-and inaction bands affect:
+Specifically, the analysis focuses on three questions:
 
-- the frequency of rebalancing,
-- total hedging costs,
-- the final profit-and-loss of the writer.
+- How often does the hedge need to be rebalanced?
+- How large are the total transaction costs?
+- How do these costs impact the final profit-and-loss of the option writer?
 
 ---
 
 ## Methodology
 
-### 1. Data and Volatility Estimation
-Historical price data are converted into log-returns and used to estimate a
-GARCH-type volatility model. An automatic selection routine tries several
-specifications and distributions, selecting the best model based on AIC and
-parameter significance.
-
-The estimated model is then used to simulate **stochastic, time-varying**
-volatility paths.
-
-### 2. Monte Carlo Simulation
-Using the simulated volatility, the underlying price is generated under a
-Geometric Brownian Motion:
-
-$$
-S_{t+1}
-=
-S_t \exp\!\left[
-\left(r - \frac{1}{2}\sigma_t^2\right)\Delta t
-+
-\sigma_t \sqrt{\Delta t}\, Z_t
-\right]
-$$
-
-Thousands of paths are simulated to evaluate the hedging strategy.
-
-### 3. Clewlow–Hodges Inaction Region
-Instead of continuously hedging, the trader adjusts the hedge only when:
-
-$$
-\Delta_t \notin [\Delta_t - \Gamma k,\; \Delta_t + \Gamma k]
-$$
-
-where \(k\) is the transaction-cost rate and \(\Gamma\) controls band width.
-
-All trades incur proportional costs, and the cash account accrues interest at
-the risk-free rate.
-
-### 4. Evaluation
-For each simulation, the P&L of the option writer is computed:
-
-$$
-\text{P\&L}_T =
-C_0 + \text{cash}_T + \Delta_T S_T - (S_T - K)^+
-$$
-
-We report:
-
-- probability of profit,
-- probability of exercise,
-- number of rebalancings.
+1. Historical price data are used to estimate a GARCH-type model for volatility.  
+2. Using the estimated volatility, many price paths are simulated.  
+3. Instead of rebalancing continuously, the hedge is adjusted only when the delta moves outside a tolerance band (the “inaction region”).  
+4. For each simulated scenario, the final P&L, the number of rebalancings, and the probability of option exercise are computed.
 
 ---
 
-## Key Findings
+## Key Insights
 
-- With **zero transaction costs**, the strategy can produce positive P&L in a
-meaningful share of scenarios.
-- When realistic costs are introduced, the strategy becomes **economically
-unsustainable**: trading costs dominate the premium.
-- The inaction region reduces trading frequency, but **not enough** to offset
-frictions.
-- The probability of exercise remains unchanged, since hedging does not affect
-the price process.
+- With zero transaction costs, the strategy can perform well in some scenarios.  
+- Once realistic transaction costs are included, trading expenses dominate and profitability drops.  
+- The inaction region helps reduce trading frequency, but usually not enough to offset costs.  
+- Hedging does not change the likelihood that the option finishes in the money.
 
 ---
 
 ## Disclaimer
 
-This project is intended solely for academic purposes.  
-The models rely on simplifying assumptions and do not represent trading advice.
-Results illustrate theoretical behaviour and may not be replicable in real
-markets.
+This project is for academic purposes only.  
+The results rely on simplifying assumptions and should not be interpreted as investment advice.
 
 ---
 
@@ -98,8 +42,8 @@ markets.
 - NumPy  
 - Pandas  
 - Matplotlib  
-- `arch` package  
-- Jupyter Notebook  
+- `arch`
+- Jupyter Notebook
 
 Install dependencies:
 
