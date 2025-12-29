@@ -30,24 +30,24 @@ volatility paths.
 Using the simulated volatility, the underlying price is generated under a
 Geometric Brownian Motion:
 
-\[
+$$
 S_{t+1}
 =
 S_t \exp\!\left[
 \left(r - \frac{1}{2}\sigma_t^2\right)\Delta t
 +
 \sigma_t \sqrt{\Delta t}\, Z_t
-\right].
-\]
+\right]
+$$
 
 Thousands of paths are simulated to evaluate the hedging strategy.
 
 ### 3. Clewlow–Hodges Inaction Region
 Instead of continuously hedging, the trader adjusts the hedge only when:
 
-\[
-\Delta_t \notin [\Delta_t - \Gamma k,\; \Delta_t + \Gamma k],
-\]
+$$
+\Delta_t \notin [\Delta_t - \Gamma k,\; \Delta_t + \Gamma k]
+$$
 
 where \(k\) is the transaction-cost rate and \(\Gamma\) controls band width.
 
@@ -57,10 +57,10 @@ the risk-free rate.
 ### 4. Evaluation
 For each simulation, the P&L of the option writer is computed:
 
-\[
-\text{P&L}_T =
-C_0 + \text{cash}_T + \Delta_T S_T - (S_T - K)^+.
-\]
+$$
+\text{P\&L}_T =
+C_0 + \text{cash}_T + \Delta_T S_T - (S_T - K)^+
+$$
 
 We report:
 
@@ -105,4 +105,3 @@ Install dependencies:
 
 ```bash
 pip install -r requirements.txt
-
